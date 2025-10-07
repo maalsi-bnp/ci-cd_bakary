@@ -1,18 +1,18 @@
+# Étape 1 : image de base
 FROM python:3.11-slim
 
+# Étape 2 : dossier de travail
 WORKDIR /app
 
-# Prevent generation of .pyc files
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
+# Étape 3 : copie des fichiers
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+COPY app app
+COPY main.py .
 
-COPY . .
-
+# Étape 4 : port exposé
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Étape 5 : commande de démarrage
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
