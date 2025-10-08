@@ -8,7 +8,7 @@ jobs:
     name: Deploy Job
     runs-on: ubuntu-latest
     environment:
-      name: production   # ⚠️ C’est ce qui va “lier” ton environnement
+      name: production   #  C’est ce qui va “lier” ton environnement
       url: https://example.com/  # Optionnel
 
     steps:
