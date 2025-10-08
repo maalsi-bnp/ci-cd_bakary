@@ -7,17 +7,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: production
-      url: https://example.com/
+      name: production  # lie le job à ton environnement
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Simulate Deployment
+      - name: Simulate deployment
         env:
           APP_SECRET: ${{ secrets.APP_SECRET }}
         run: |
-          echo "✅ Déploiement simulé de l’image ghcr.io/Bakary923/ci-cd_bakary:${{ github.ref_name }} sur production..."
+          echo "Déploiement de l’image ghcr.io/Bakary923/cicd-bakary:${{ github.ref_name }} sur production..."
           echo "App secret = $APP_SECRET"
-          sleep 10  # permet de “voir” le job en cours
