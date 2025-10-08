@@ -1,31 +1,23 @@
-name: Deploy to Production (simulated)
+name: Deploy to Production
 
 on:
   workflow_dispatch:
-    inputs:
-      image_tag:
-        description: 'Image tag to deploy (ex: v1.0.0)'
-        required: true
-        default: 'v1.0.0'
-
-permissions:
-  contents: read
 
 jobs:
   deploy:
+    name: Deploy Job
     runs-on: ubuntu-latest
     environment:
-      name: production
-      # url: https://your.production.url  # opcionnel
+      name: production   # ⚠️ C’est ce qui va “lier” ton environnement
+      url: https://example.com/  # Optionnel
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show secret from environment (masked)
+      - name: Déploiement
+        env:
+          APP_SECRET: ${{ secrets.APP_SECRET }}
         run: |
-          echo "Using APP_SECRET from environment (masked) -> ${{ secrets.APP_SECRET }}"
-      - name: Simulate deployment
-        run: |
-          IMAGE="ghcr.io/${{ github.repository_owner }}/${{ github.repository.name }}:${{ inputs.image_tag }}"
-          echo "Déploiement de l'image $IMAGE sur production..."
-          # Ici on simule : on pourrait appeler kubectl, ssh, etc.
+          echo "Déploiement de l’image ghcr.io/Bakary923/ci-cd_bakary:${{ github.ref_name }} sur production..."
+          echo "App secret = $APP_SECRET"
